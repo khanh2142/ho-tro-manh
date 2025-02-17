@@ -27,6 +27,7 @@ const SearchForm = ({ fields }: SearchFormProps) => {
               style={{
                 marginBottom: 10,
               }}
+              key={field.name}
             >
               <Form.Group key={index}>
                 <Form.ControlLabel

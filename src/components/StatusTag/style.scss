@@ -1,0 +1,15 @@
+.status-tag {
+  &.active {
+    svg {
+      fill: green;
+      font-size: 18px !important;
+    }
+  }
+
+  &.inactive {
+    svg {
+      fill: red;
+      font-size: 18px !important;
+    }
+  }
+}
