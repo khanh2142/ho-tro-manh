@@ -39,8 +39,18 @@ const SearchForm = ({
   };
 
   return (
-    <Form formValue={formValue} onChange={onChange}>
-      <FlexboxGrid>
+    <Form
+      formValue={formValue}
+      onChange={onChange}
+      style={{
+        width: "100%",
+      }}
+    >
+      <FlexboxGrid
+        style={{
+          width: "100%",
+        }}
+      >
         {fields.map((field, index) => {
           return (
             <FlexboxGrid.Item

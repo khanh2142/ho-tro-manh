@@ -1,6 +1,8 @@
 import GridIcon from "@rsuite/icons/Grid";
 import React from "react";
+import { useNavigate } from "react-router";
 import { Nav, Sidenav } from "rsuite";
+import { commonRoutes } from "../../routes/common";
 
 const CustomSidenav = ({
   openKeys,
@@ -9,11 +11,16 @@ const CustomSidenav = ({
   onExpand,
   ...navProps
 }: any) => {
+  const navigate = useNavigate();
+
   const styles = {
     width: 240,
     display: "inline-table",
-    marginRight: 10,
-    height: "100vh",
+    height: "100%",
+  };
+
+  const onNavigate = (path: string) => {
+    navigate(path);
   };
 
   return (
@@ -28,11 +35,17 @@ const CustomSidenav = ({
       >
         <Sidenav.Body>
           <Nav {...navProps}>
-            <Nav.Menu eventKey="3" title="Common" icon={<GridIcon />}>
-              <Nav.Item eventKey="3-1">User</Nav.Item>
-              <Nav.Item eventKey="3-2">Phòng ban</Nav.Item>
-              <Nav.Item eventKey="3-3">Danh mục</Nav.Item>
-              <Nav.Item eventKey="3-4">Hạng mục</Nav.Item>
+            <Nav.Menu title="Common" icon={<GridIcon />}>
+              {commonRoutes.map((item) => {
+                return (
+                  <Nav.Item
+                    key={item.key}
+                    onSelect={() => onNavigate(item.path)}
+                  >
+                    {item.text}
+                  </Nav.Item>
+                );
+              })}
               <Nav.Item divider />
             </Nav.Menu>
             <Nav.Menu eventKey="4" title="WFM" icon={<GridIcon />}>
