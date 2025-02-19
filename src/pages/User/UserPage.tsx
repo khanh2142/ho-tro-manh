@@ -1,12 +1,14 @@
 import { faker } from "@faker-js/faker";
 import PlusIcon from "@rsuite/icons/Plus";
 import TrashIcon from "@rsuite/icons/Trash";
-import { useRef } from "react";
+import axios from "axios";
+import { useEffect, useRef } from "react";
 import { Button, Heading, Message, Stack, useToaster } from "rsuite";
 import PopupDelete from "../../components/Popup/PopupDelete/PopupDelete";
 import SearchForm, { Field } from "../../components/SearchForm/SearchForm";
 import StatusTag from "../../components/StatusTag/StatusTag";
 import TableRender, { Column } from "../../components/TableRender/TableRender";
+import { useApiService } from "../../config/api/ApiService";
 import PopupUser from "./components/PopupUser";
 
 const UserPage = () => {
@@ -14,6 +16,32 @@ const UserPage = () => {
   const popupDeleteRef = useRef(null);
   const tableRef = useRef(null);
   const toaster = useToaster();
+  const api = useApiService();
+
+  useEffect(() => {
+    // api
+    //   .user_search({
+    //     query: "",
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+
+    axios
+      .get(
+        "http://localhost:8080/api/common/user/paging?first=0&rows=10&page=0",
+        {}
+      )
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
 
   const defaultFormValue = {
     userName: "",

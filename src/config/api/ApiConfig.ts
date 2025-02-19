@@ -1,7 +1,12 @@
+const api_domain = import.meta.env.VITE_API_DOMAIN;
+
 export const useApiConfig = () => {
   const get = async ({ url, params, headers }) => {
     const queryParams = new URLSearchParams(params).toString();
-    const response = await fetch(`${url}?${queryParams}`, {
+
+    const api_link = `${api_domain}/${url}/paging?first=0&rows=10&page=0`;
+
+    const response = await fetch(api_link, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
