@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Button,
   ButtonToolbar,
@@ -14,11 +15,31 @@ export interface Field {
 
 interface SearchFormProps {
   fields: Field[];
+  onSearch: (formValue: any) => void;
+  defaultFormValue?: any;
 }
 
-const SearchForm = ({ fields }: SearchFormProps) => {
+const SearchForm = ({
+  fields,
+  onSearch,
+  defaultFormValue,
+}: SearchFormProps) => {
+  const [formValue, setFormValue] = useState(defaultFormValue ?? {});
+
+  const handleSearch = () => {
+    onSearch(formValue);
+  };
+
+  const onChange = (formValue: any) => {
+    setFormValue(formValue);
+  };
+
+  const handleReset = () => {
+    setFormValue(defaultFormValue ?? {});
+  };
+
   return (
-    <Form>
+    <Form formValue={formValue} onChange={onChange}>
       <FlexboxGrid>
         {fields.map((field, index) => {
           return (
@@ -46,8 +67,12 @@ const SearchForm = ({ fields }: SearchFormProps) => {
 
       <Form.Group>
         <ButtonToolbar>
-          <Button appearance="primary">Tìm kiếm</Button>
-          <Button appearance="default">Reset</Button>
+          <Button appearance="primary" onClick={handleSearch}>
+            Tìm kiếm
+          </Button>
+          <Button appearance="default" onClick={handleReset}>
+            Reset
+          </Button>
         </ButtonToolbar>
       </Form.Group>
     </Form>
