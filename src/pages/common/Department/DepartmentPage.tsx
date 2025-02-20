@@ -3,45 +3,53 @@ import PlusIcon from "@rsuite/icons/Plus";
 import TrashIcon from "@rsuite/icons/Trash";
 import { useRef } from "react";
 import { Button, Heading, Message, Stack, useToaster } from "rsuite";
-import PopupDelete from "../../components/Popup/PopupDelete/PopupDelete";
-import SearchForm, { Field } from "../../components/SearchForm/SearchForm";
-import StatusTag from "../../components/StatusTag/StatusTag";
-import TableRender, { Column } from "../../components/TableRender/TableRender";
-import PopupCategory from "./components/PopupCategory";
+import PopupDelete from "../../../components/Popup/PopupDelete/PopupDelete";
+import SearchForm, { Field } from "../../../components/SearchForm/SearchForm";
+import StatusTag from "../../../components/StatusTag/StatusTag";
+import TableRender, {
+  Column,
+} from "../../../components/TableRender/TableRender";
+import PopupDepartment from "./components/PopupDepartment";
 
-const CategoryPage = () => {
+const DepartmentPage = () => {
   const popupRef = useRef(null);
   const popupDeleteRef = useRef(null);
   const tableRef = useRef(null);
   const toaster = useToaster();
 
   const defaultFormValue = {
-    categoryCode: "",
-    categoryName: "",
+    departmentCode: "",
+    departmentName: "",
   };
 
   const fields: Field[] = [
     {
-      label: "Mã danh mục",
-      name: "usercategoryCodeName",
+      label: "Mã phòng ban",
+      name: "userdepartmentCodeName",
     },
     {
-      label: "Tên danh mục",
-      name: "categoryName",
+      label: "Tên phòng ban",
+      name: "departmentName",
     },
   ];
 
   const columns: Column[] = [
     {
-      label: "Mã danh mục",
-      dataKey: "categoryCode",
+      dataKey: "departmentCode",
+      label: "Mã phòng ban",
       width: 200,
     },
     {
-      label: "Tên danh mục",
-      dataKey: "categoryName",
+      label: "Tên phòng ban",
+      dataKey: "departmentName",
       width: 200,
     },
+    {
+      label: "Phòng ban cha",
+      dataKey: "departmentParent",
+      width: 200,
+    },
+
     {
       label: "Trạng thái",
       dataKey: "status",
@@ -54,9 +62,9 @@ const CategoryPage = () => {
 
   const data = Array.from({ length: 100 }).map((_, index) => ({
     // use faker to generate fake data
-    categoryCode: faker.food.adjective(),
-    categoryName: faker.food.adjective(),
-    categoryParent: faker.food.adjective(),
+    departmentCode: faker.commerce.department(),
+    departmentName: faker.commerce.department(),
+    departmentParent: faker.commerce.department(),
     status: faker.helpers.arrayElement(["active", "inactive"]),
   }));
 
@@ -74,7 +82,7 @@ const CategoryPage = () => {
 
   const handleDelete = (rowData: any) => {
     popupDeleteRef.current?.open({
-      content: `Bạn có chắc chắn muốn xóa danh mục ${rowData.categoryCode}?`,
+      content: `Bạn có chắc chắn muốn xóa phòng ban ${rowData.departmentCode}?`,
       data: rowData,
     });
   };
@@ -89,7 +97,7 @@ const CategoryPage = () => {
     if (!listChecked || listChecked.length === 0) {
       toaster.push(
         <Message type="error">
-          <strong>Vui lòng chọn danh mục</strong>
+          <strong>Vui lòng chọn phòng ban</strong>
         </Message>,
         {
           duration: 1000,
@@ -99,7 +107,7 @@ const CategoryPage = () => {
     }
 
     popupDeleteRef.current?.open({
-      content: `Bạn có chắc chắn muốn xóa ${listChecked.length} danh mục?`,
+      content: `Bạn có chắc chắn muốn xóa ${listChecked.length} phòng ban?`,
       data: listChecked,
     });
   };
@@ -113,21 +121,21 @@ const CategoryPage = () => {
         width: "100%",
       }}
     >
-      <Heading>Danh sách danh mục</Heading>
+      <Heading>Danh sách Phòng ban</Heading>
       <Stack spacing={10}>
         <Button
           startIcon={<PlusIcon />}
           appearance="primary"
           onClick={handleAdd}
         >
-          Thêm danh mục
+          Thêm phòng ban
         </Button>
         <Button
           startIcon={<TrashIcon />}
           appearance="primary"
           onClick={handleDeleteMultiple}
         >
-          Xóa danh mục
+          Xóa phòng ban
         </Button>
       </Stack>
 
@@ -150,7 +158,7 @@ const CategoryPage = () => {
         />
       </Stack.Item>
 
-      <PopupCategory ref={popupRef} />
+      <PopupDepartment ref={popupRef} />
 
       <PopupDelete
         ref={popupDeleteRef}
@@ -160,4 +168,4 @@ const CategoryPage = () => {
   );
 };
 
-export default CategoryPage;
+export default DepartmentPage;

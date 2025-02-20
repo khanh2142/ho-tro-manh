@@ -4,11 +4,13 @@ import TrashIcon from "@rsuite/icons/Trash";
 import axios from "axios";
 import { useEffect, useRef } from "react";
 import { Button, Heading, Message, Stack, useToaster } from "rsuite";
-import PopupDelete from "../../components/Popup/PopupDelete/PopupDelete";
-import SearchForm, { Field } from "../../components/SearchForm/SearchForm";
-import StatusTag from "../../components/StatusTag/StatusTag";
-import TableRender, { Column } from "../../components/TableRender/TableRender";
-import { useApiService } from "../../config/api/ApiService";
+import PopupDelete from "../../../components/Popup/PopupDelete/PopupDelete";
+import SearchForm, { Field } from "../../../components/SearchForm/SearchForm";
+import StatusTag from "../../../components/StatusTag/StatusTag";
+import TableRender, {
+  Column,
+} from "../../../components/TableRender/TableRender";
+import { useApiService } from "../../../config/api/ApiService";
 import PopupUser from "./components/PopupUser";
 
 const UserPage = () => {

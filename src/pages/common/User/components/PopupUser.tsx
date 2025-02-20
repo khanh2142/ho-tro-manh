@@ -1,9 +1,9 @@
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { Button, FlexboxGrid, Form, Modal, Schema, SelectPicker } from "rsuite";
-import RequireField from "../../../components/RequireField/RequireField";
+import RequireField from "../../../../components/RequireField/RequireField";
 const { StringType, NumberType } = Schema.Types;
 
-const PopupDepartment = forwardRef(({}, ref) => {
+const PopupUser = forwardRef(({}, ref) => {
   useImperativeHandle(ref, () => ({
     create: () => {
       setType("create");
@@ -62,7 +62,7 @@ const PopupDepartment = forwardRef(({}, ref) => {
             fontWeight: "bold",
           }}
         >
-          {type === "create" ? "Tạo mới phòng ban" : "Chỉnh sửa phòng ban"}
+          {type === "create" ? "Tạo mới người dùng" : "Chỉnh sửa người dùng"}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -80,9 +80,9 @@ const PopupDepartment = forwardRef(({}, ref) => {
                     fontWeight: "bold",
                   }}
                 >
-                  <RequireField content="Mã phòng ban" />
+                  <RequireField content="Tên tài khoản" />
                 </Form.ControlLabel>
-                <Form.Control name="departmentCode" />
+                <Form.Control name="userName" />
               </Form.Group>
             </FlexboxGrid.Item>
 
@@ -98,9 +98,9 @@ const PopupDepartment = forwardRef(({}, ref) => {
                     fontWeight: "bold",
                   }}
                 >
-                  <RequireField content="Tên phòng ban" />
+                  <RequireField content="Họ" />
                 </Form.ControlLabel>
-                <Form.Control name="departmentName" />
+                <Form.Control name="firstName" />
               </Form.Group>
             </FlexboxGrid.Item>
 
@@ -116,9 +116,70 @@ const PopupDepartment = forwardRef(({}, ref) => {
                     fontWeight: "bold",
                   }}
                 >
-                  <RequireField content="Phòng ban cha" />
+                  <RequireField content="Tên" />
                 </Form.ControlLabel>
-                <Form.Control name="departmentParent" />
+                <Form.Control name="lastName" />
+              </Form.Group>
+            </FlexboxGrid.Item>
+
+            <FlexboxGrid.Item
+              colspan={12}
+              style={{
+                marginBottom: 10,
+              }}
+            >
+              <Form.Group>
+                <Form.ControlLabel
+                  style={{
+                    fontWeight: "bold",
+                  }}
+                >
+                  Phòng ban
+                </Form.ControlLabel>
+                <Form.Control
+                  name="department"
+                  accepter={SelectPicker}
+                  data={[]}
+                  style={{
+                    width: 300,
+                  }}
+                />
+              </Form.Group>
+            </FlexboxGrid.Item>
+
+            <FlexboxGrid.Item
+              colspan={12}
+              style={{
+                marginBottom: 10,
+              }}
+            >
+              <Form.Group>
+                <Form.ControlLabel
+                  style={{
+                    fontWeight: "bold",
+                  }}
+                >
+                  <RequireField content="Email" />
+                </Form.ControlLabel>
+                <Form.Control name="email" />
+              </Form.Group>
+            </FlexboxGrid.Item>
+
+            <FlexboxGrid.Item
+              colspan={12}
+              style={{
+                marginBottom: 10,
+              }}
+            >
+              <Form.Group>
+                <Form.ControlLabel
+                  style={{
+                    fontWeight: "bold",
+                  }}
+                >
+                  <RequireField content="Số điện thoại" />
+                </Form.ControlLabel>
+                <Form.Control name="phone" />
               </Form.Group>
             </FlexboxGrid.Item>
 
@@ -166,4 +227,4 @@ const PopupDepartment = forwardRef(({}, ref) => {
   );
 });
 
-export default PopupDepartment;
+export default PopupUser;

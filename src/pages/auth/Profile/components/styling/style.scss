@@ -1,0 +1,23 @@
+.profile-info {
+  border: 1px solid #939393;
+  border-radius: 10px;
+  padding: 10px;
+
+  .rs-stack-item {
+    width: 100%;
+  }
+
+  &__edit {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}
+
+.textarea {
+  width: 100% !important;
+}
+
+.rs-form-control:has(.textarea) {
+  width: 100% !important;
+}

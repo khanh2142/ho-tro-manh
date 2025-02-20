@@ -2,7 +2,10 @@ import GridIcon from "@rsuite/icons/Grid";
 import React from "react";
 import { useNavigate } from "react-router";
 import { Nav, Sidenav } from "rsuite";
+// import "rsuite/Dropdown/styles/index.css";
 import { commonRoutes } from "../../routes/common";
+import UserInfo from "../UserInfo/UserInfo";
+import "./style.scss";
 
 const CustomSidenav = ({
   openKeys,
@@ -15,8 +18,8 @@ const CustomSidenav = ({
 
   const styles = {
     width: 240,
-    display: "inline-table",
     height: "100%",
+    position: "relative",
   };
 
   const onNavigate = (path: string) => {
@@ -55,8 +58,9 @@ const CustomSidenav = ({
             </Nav.Menu>
           </Nav>
         </Sidenav.Body>
-        <Sidenav.Toggle onToggle={onExpand} />
       </Sidenav>
+
+      <UserInfo />
     </div>
   );
 };

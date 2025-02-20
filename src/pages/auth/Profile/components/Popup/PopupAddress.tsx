@@ -1,9 +1,25 @@
-import { forwardRef, useImperativeHandle, useRef, useState } from "react";
-import { Button, FlexboxGrid, Form, Modal, Schema, SelectPicker } from "rsuite";
-import RequireField from "../../../components/RequireField/RequireField";
+import React, {
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
+import {
+  Button,
+  FlexboxGrid,
+  Form,
+  Input,
+  Modal,
+  Schema,
+  SelectPicker,
+} from "rsuite";
 const { StringType, NumberType } = Schema.Types;
 
-const PopupUser = forwardRef(({}, ref) => {
+const Textarea = React.forwardRef((props, ref) => (
+  <Input {...props} as="textarea" ref={ref} />
+));
+
+const PopupAddress = forwardRef(({}, ref) => {
   useImperativeHandle(ref, () => ({
     create: () => {
       setType("create");
@@ -36,7 +52,7 @@ const PopupUser = forwardRef(({}, ref) => {
     userName: StringType().isRequired("Vui lòng nhập tên tài khoản"),
     firstName: StringType().isRequired("Vui lòng nhập họ"),
     lastName: StringType().isRequired("Vui lòng nhập tên"),
-    // department: StringType().isRequired("Vui lòng nhập phòng ban"),
+    // item: StringType().isRequired("Vui lòng nhập hạng mục"),
     email: StringType()
       .isEmail("Vui lòng nhập đúng định dạng email")
       .isRequired("Vui lòng nhập email"),
@@ -62,7 +78,7 @@ const PopupUser = forwardRef(({}, ref) => {
             fontWeight: "bold",
           }}
         >
-          {type === "create" ? "Tạo mới người dùng" : "Chỉnh sửa người dùng"}
+          Sửa địa chỉ liên hệ
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -80,64 +96,10 @@ const PopupUser = forwardRef(({}, ref) => {
                     fontWeight: "bold",
                   }}
                 >
-                  <RequireField content="Tên tài khoản" />
-                </Form.ControlLabel>
-                <Form.Control name="userName" />
-              </Form.Group>
-            </FlexboxGrid.Item>
-
-            <FlexboxGrid.Item
-              colspan={12}
-              style={{
-                marginBottom: 10,
-              }}
-            >
-              <Form.Group>
-                <Form.ControlLabel
-                  style={{
-                    fontWeight: "bold",
-                  }}
-                >
-                  <RequireField content="Họ" />
-                </Form.ControlLabel>
-                <Form.Control name="firstName" />
-              </Form.Group>
-            </FlexboxGrid.Item>
-
-            <FlexboxGrid.Item
-              colspan={12}
-              style={{
-                marginBottom: 10,
-              }}
-            >
-              <Form.Group>
-                <Form.ControlLabel
-                  style={{
-                    fontWeight: "bold",
-                  }}
-                >
-                  <RequireField content="Tên" />
-                </Form.ControlLabel>
-                <Form.Control name="lastName" />
-              </Form.Group>
-            </FlexboxGrid.Item>
-
-            <FlexboxGrid.Item
-              colspan={12}
-              style={{
-                marginBottom: 10,
-              }}
-            >
-              <Form.Group>
-                <Form.ControlLabel
-                  style={{
-                    fontWeight: "bold",
-                  }}
-                >
-                  Phòng ban
+                  Tỉnh/Thành phố
                 </Form.ControlLabel>
                 <Form.Control
-                  name="department"
+                  name="provinceCode"
                   accepter={SelectPicker}
                   data={[]}
                   style={{
@@ -159,54 +121,70 @@ const PopupUser = forwardRef(({}, ref) => {
                     fontWeight: "bold",
                   }}
                 >
-                  <RequireField content="Email" />
-                </Form.ControlLabel>
-                <Form.Control name="email" />
-              </Form.Group>
-            </FlexboxGrid.Item>
-
-            <FlexboxGrid.Item
-              colspan={12}
-              style={{
-                marginBottom: 10,
-              }}
-            >
-              <Form.Group>
-                <Form.ControlLabel
-                  style={{
-                    fontWeight: "bold",
-                  }}
-                >
-                  <RequireField content="Số điện thoại" />
-                </Form.ControlLabel>
-                <Form.Control name="phone" />
-              </Form.Group>
-            </FlexboxGrid.Item>
-
-            <FlexboxGrid.Item
-              colspan={12}
-              style={{
-                marginBottom: 10,
-              }}
-            >
-              <Form.Group>
-                <Form.ControlLabel
-                  style={{
-                    fontWeight: "bold",
-                  }}
-                >
-                  Trạng thái
+                  Quận/Huyện
                 </Form.ControlLabel>
                 <Form.Control
-                  name="status"
+                  name="districtCode"
                   accepter={SelectPicker}
-                  data={[
-                    { label: "Đang hoạt động", value: "active" },
-                    { label: "Không hoạt động", value: "inactive" },
-                  ]}
+                  data={[]}
                   style={{
                     width: 300,
                   }}
+                />
+              </Form.Group>
+            </FlexboxGrid.Item>
+
+            <FlexboxGrid.Item
+              colspan={12}
+              style={{
+                marginBottom: 10,
+              }}
+            >
+              <Form.Group>
+                <Form.ControlLabel
+                  style={{
+                    fontWeight: "bold",
+                  }}
+                >
+                  Phường/Xã
+                </Form.ControlLabel>
+                <Form.Control
+                  name="wardCode"
+                  accepter={SelectPicker}
+                  data={[]}
+                  style={{
+                    width: 300,
+                  }}
+                />
+              </Form.Group>
+            </FlexboxGrid.Item>
+
+            <FlexboxGrid.Item
+              colspan={12}
+              style={{
+                marginBottom: 10,
+              }}
+            ></FlexboxGrid.Item>
+
+            <FlexboxGrid.Item
+              colspan={24}
+              style={{
+                marginBottom: 10,
+              }}
+            >
+              <Form.Group>
+                <Form.ControlLabel
+                  style={{
+                    fontWeight: "bold",
+                  }}
+                >
+                  Tên đường, Số nhà, Tòa nhà
+                </Form.ControlLabel>
+                <Form.Control
+                  name="address"
+                  accepter={Textarea}
+                  className="textarea"
+                  rows={5}
                 />
               </Form.Group>
             </FlexboxGrid.Item>
@@ -227,4 +205,4 @@ const PopupUser = forwardRef(({}, ref) => {
   );
 });
 
-export default PopupUser;
+export default PopupAddress;

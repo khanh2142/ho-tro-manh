@@ -3,10 +3,12 @@ import PlusIcon from "@rsuite/icons/Plus";
 import TrashIcon from "@rsuite/icons/Trash";
 import { useRef } from "react";
 import { Button, Heading, Message, Stack, useToaster } from "rsuite";
-import PopupDelete from "../../components/Popup/PopupDelete/PopupDelete";
-import SearchForm, { Field } from "../../components/SearchForm/SearchForm";
-import StatusTag from "../../components/StatusTag/StatusTag";
-import TableRender, { Column } from "../../components/TableRender/TableRender";
+import PopupDelete from "../../../components/Popup/PopupDelete/PopupDelete";
+import SearchForm, { Field } from "../../../components/SearchForm/SearchForm";
+import StatusTag from "../../../components/StatusTag/StatusTag";
+import TableRender, {
+  Column,
+} from "../../../components/TableRender/TableRender";
 import PopupItem from "./components/PopupItem";
 
 const ItemPage = () => {

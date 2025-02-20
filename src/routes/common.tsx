@@ -1,7 +1,7 @@
-import CategoryPage from "../pages/Category/CategoryPage";
-import DepartmentPage from "../pages/Department/DepartmentPage";
-import ItemPage from "../pages/Item/ItemPage";
-import UserPage from "../pages/User/UserPage";
+import CategoryPage from "../pages/common/Category/CategoryPage";
+import DepartmentPage from "../pages/common/Department/DepartmentPage";
+import ItemPage from "../pages/common/Item/ItemPage";
+import UserPage from "../pages/common/User/UserPage";
 
 export const commonRoutes = [
   {

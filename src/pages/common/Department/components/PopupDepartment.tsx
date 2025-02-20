@@ -1,9 +1,9 @@
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { Button, FlexboxGrid, Form, Modal, Schema, SelectPicker } from "rsuite";
-import RequireField from "../../../components/RequireField/RequireField";
+import RequireField from "../../../../components/RequireField/RequireField";
 const { StringType, NumberType } = Schema.Types;
 
-const PopupCategory = forwardRef(({}, ref) => {
+const PopupDepartment = forwardRef(({}, ref) => {
   useImperativeHandle(ref, () => ({
     create: () => {
       setType("create");
@@ -36,7 +36,7 @@ const PopupCategory = forwardRef(({}, ref) => {
     userName: StringType().isRequired("Vui lòng nhập tên tài khoản"),
     firstName: StringType().isRequired("Vui lòng nhập họ"),
     lastName: StringType().isRequired("Vui lòng nhập tên"),
-    // category: StringType().isRequired("Vui lòng nhập danh mục"),
+    // department: StringType().isRequired("Vui lòng nhập phòng ban"),
     email: StringType()
       .isEmail("Vui lòng nhập đúng định dạng email")
       .isRequired("Vui lòng nhập email"),
@@ -62,7 +62,7 @@ const PopupCategory = forwardRef(({}, ref) => {
             fontWeight: "bold",
           }}
         >
-          {type === "create" ? "Tạo mới danh mục" : "Chỉnh sửa danh mục"}
+          {type === "create" ? "Tạo mới phòng ban" : "Chỉnh sửa phòng ban"}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -80,9 +80,9 @@ const PopupCategory = forwardRef(({}, ref) => {
                     fontWeight: "bold",
                   }}
                 >
-                  <RequireField content="Mã danh mục" />
+                  <RequireField content="Mã phòng ban" />
                 </Form.ControlLabel>
-                <Form.Control name="categoryCode" />
+                <Form.Control name="departmentCode" />
               </Form.Group>
             </FlexboxGrid.Item>
 
@@ -98,9 +98,27 @@ const PopupCategory = forwardRef(({}, ref) => {
                     fontWeight: "bold",
                   }}
                 >
-                  <RequireField content="Tên danh mục" />
+                  <RequireField content="Tên phòng ban" />
                 </Form.ControlLabel>
-                <Form.Control name="categoryName" />
+                <Form.Control name="departmentName" />
+              </Form.Group>
+            </FlexboxGrid.Item>
+
+            <FlexboxGrid.Item
+              colspan={12}
+              style={{
+                marginBottom: 10,
+              }}
+            >
+              <Form.Group>
+                <Form.ControlLabel
+                  style={{
+                    fontWeight: "bold",
+                  }}
+                >
+                  <RequireField content="Phòng ban cha" />
+                </Form.ControlLabel>
+                <Form.Control name="departmentParent" />
               </Form.Group>
             </FlexboxGrid.Item>
 
@@ -148,4 +166,4 @@ const PopupCategory = forwardRef(({}, ref) => {
   );
 });
 
-export default PopupCategory;
+export default PopupDepartment;
