@@ -23,7 +23,6 @@ export interface Column {
 
 interface TableRenderProps {
   columns: Column[];
-  data: any[];
   primaryKey: string;
   handleEdit?: (rowData: any) => void;
   handleDelete?: (rowData: any) => void;
@@ -31,13 +30,7 @@ interface TableRenderProps {
 
 const TableRender = forwardRef(
   (
-    {
-      columns,
-      data = [],
-      primaryKey,
-      handleEdit,
-      handleDelete,
-    }: TableRenderProps,
+    { columns, primaryKey, handleEdit, handleDelete }: TableRenderProps,
     ref
   ) => {
     useImperativeHandle(ref, () => ({
@@ -46,8 +39,12 @@ const TableRender = forwardRef(
           return checkedKeys.includes(item[primaryKey]);
         });
       },
+      setData: (data: any[]) => {
+        setData(data);
+      },
     }));
 
+    const [data, setData] = React.useState<any[]>([]);
     const [checkedKeys, setCheckedKeys] = React.useState<any[]>([]);
     let checked = false;
     let indeterminate = false;
@@ -189,7 +186,7 @@ const TableRender = forwardRef(
               size="sm"
               layout={["total", "-", "limit", "|", "pager", "skip"]}
               total={data.length}
-              limitOptions={[10, 30, 50]}
+              limitOptions={[5, 10, 15, 20, 25]}
               limit={limit}
               activePage={page}
               onChangePage={setPage}

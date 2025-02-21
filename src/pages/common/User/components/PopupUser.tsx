@@ -1,6 +1,8 @@
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { Button, FlexboxGrid, Form, Modal, Schema, SelectPicker } from "rsuite";
+import PasswordField from "../../../../components/PasswordField/PasswordField";
 import RequireField from "../../../../components/RequireField/RequireField";
+import { useApiService } from "../../../../config/api/ApiService";
 const { StringType, NumberType } = Schema.Types;
 
 const PopupUser = forwardRef(({}, ref) => {
@@ -16,20 +18,45 @@ const PopupUser = forwardRef(({}, ref) => {
     },
   }));
 
+  const api = useApiService();
+
   const formRef = useRef<any>(null);
 
   const [open, setOpen] = useState<boolean>(false);
   const [type, setType] = useState<"create" | "edit">("create");
   const [formValue, setFormValue] = useState<any>({
-    status: "active",
+    status: "1",
   });
 
   const onChange = (formValue: any) => {
+    // {
+    //   "userId": 0,
+    //   "userName": "string",
+    //   "password": "string",
+    //   "email": "string",
+    //   "phoneNumber": "string",
+    //   "firstName": "string",
+    //   "lastName": "string",
+    //   "departmentId": 0,
+    //   "status": 0
+    // }
+
     setFormValue(formValue);
   };
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const onSubmit = async () => {
+    const resp = await api.user_create({
+      body: {
+        ...formValue,
+        userId: type == "create" ? null : formValue.userId,
+      },
+    });
+
+    console.log(resp);
   };
 
   const model = Schema.Model({
@@ -40,7 +67,7 @@ const PopupUser = forwardRef(({}, ref) => {
     email: StringType()
       .isEmail("Vui lòng nhập đúng định dạng email")
       .isRequired("Vui lòng nhập email"),
-    phone: StringType()
+    phoneNumber: StringType()
       .addRule((value) => {
         if (!value) {
           return false;
@@ -66,7 +93,12 @@ const PopupUser = forwardRef(({}, ref) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form formValue={formValue} onChange={onChange} model={model}>
+        <Form
+          formValue={formValue}
+          onChange={onChange}
+          model={model}
+          onSubmit={onSubmit}
+        >
           <FlexboxGrid>
             <FlexboxGrid.Item
               colspan={12}
@@ -83,6 +115,34 @@ const PopupUser = forwardRef(({}, ref) => {
                   <RequireField content="Tên tài khoản" />
                 </Form.ControlLabel>
                 <Form.Control name="userName" />
+              </Form.Group>
+            </FlexboxGrid.Item>
+
+            <FlexboxGrid.Item
+              colspan={12}
+              style={{
+                marginBottom: 10,
+              }}
+            >
+              <Form.Group>
+                <Form.ControlLabel
+                  style={{
+                    fontWeight: "bold",
+                  }}
+                >
+                  <RequireField content="Mật khẩu" />
+                </Form.ControlLabel>
+                <Form.Control
+                  accepter={PasswordField}
+                  name="password"
+                  value={formValue.password}
+                  onChange={(value) => {
+                    setFormValue({
+                      ...formValue,
+                      password: value,
+                    });
+                  }}
+                />
               </Form.Group>
             </FlexboxGrid.Item>
 
@@ -137,7 +197,7 @@ const PopupUser = forwardRef(({}, ref) => {
                   Phòng ban
                 </Form.ControlLabel>
                 <Form.Control
-                  name="department"
+                  name="departmentId"
                   accepter={SelectPicker}
                   data={[]}
                   style={{
@@ -179,7 +239,7 @@ const PopupUser = forwardRef(({}, ref) => {
                 >
                   <RequireField content="Số điện thoại" />
                 </Form.ControlLabel>
-                <Form.Control name="phone" />
+                <Form.Control name="phoneNumber" />
               </Form.Group>
             </FlexboxGrid.Item>
 
@@ -201,8 +261,8 @@ const PopupUser = forwardRef(({}, ref) => {
                   name="status"
                   accepter={SelectPicker}
                   data={[
-                    { label: "Đang hoạt động", value: "active" },
-                    { label: "Không hoạt động", value: "inactive" },
+                    { label: "Đang hoạt động", value: "1" },
+                    { label: "Không hoạt động", value: "0" },
                   ]}
                   style={{
                     width: 300,

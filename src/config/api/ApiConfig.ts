@@ -1,33 +1,28 @@
+import axios from "axios";
+
 const api_domain = import.meta.env.VITE_API_DOMAIN;
 
 export const useApiConfig = () => {
-  const get = async ({ url, params, headers }) => {
-    const queryParams = new URLSearchParams(params).toString();
+  const get = async ({ url, params }) => {
+    const api_link = params
+      ? `${api_domain}/${url}/${params}`
+      : `${api_domain}/${url}`;
 
-    const api_link = `${api_domain}/${url}/paging?first=0&rows=10&page=0`;
+    const response = await axios.get(api_link);
 
-    const response = await fetch(api_link, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        ...headers,
-      },
-    });
-
-    return response.json();
+    return response.data;
   };
 
-  const post = async ({ url, body, headers }) => {
-    const response = await fetch(url, {
-      method: "POST",
+  const post = async ({ url, body }) => {
+    const response = await axios.post(`${api_domain}/${url}`, body, {
       headers: {
         "Content-Type": "application/json",
-        ...headers,
       },
-      body: JSON.stringify(body),
     });
 
-    return response.json();
+    console.log(response);
+
+    return response.data;
   };
 
   const put = async ({ url, body, headers }) => {

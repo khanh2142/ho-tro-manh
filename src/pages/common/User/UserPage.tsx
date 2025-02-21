@@ -1,7 +1,5 @@
-import { faker } from "@faker-js/faker";
 import PlusIcon from "@rsuite/icons/Plus";
 import TrashIcon from "@rsuite/icons/Trash";
-import axios from "axios";
 import { useEffect, useRef } from "react";
 import { Button, Heading, Message, Stack, useToaster } from "rsuite";
 import PopupDelete from "../../../components/Popup/PopupDelete/PopupDelete";
@@ -20,36 +18,13 @@ const UserPage = () => {
   const toaster = useToaster();
   const api = useApiService();
 
-  useEffect(() => {
-    // api
-    //   .user_search({
-    //     query: "",
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-
-    axios
-      .get(
-        "http://localhost:8080/api/common/user/paging?first=0&rows=10&page=0",
-        {}
-      )
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }, []);
+  useEffect(() => {}, []);
 
   const defaultFormValue = {
     userName: "",
-    fullName: "",
+    name: "",
     email: "",
-    phone: "",
+    phoneNumber: "",
   };
 
   const fields: Field[] = [
@@ -59,7 +34,7 @@ const UserPage = () => {
     },
     {
       label: "Họ và tên",
-      name: "fullName",
+      name: "name",
     },
     {
       label: "Email",
@@ -67,7 +42,7 @@ const UserPage = () => {
     },
     {
       label: "Số điện thoại",
-      name: "phone",
+      name: "phoneNumber",
     },
   ];
 
@@ -89,7 +64,7 @@ const UserPage = () => {
     },
     {
       label: "Số điện thoại",
-      dataKey: "phone",
+      dataKey: "phoneNumber",
       width: 200,
     },
     {
@@ -99,7 +74,7 @@ const UserPage = () => {
     },
     {
       label: "Phòng ban",
-      dataKey: "department",
+      dataKey: "departmentName",
       width: 150,
     },
     {
@@ -112,19 +87,14 @@ const UserPage = () => {
     },
   ];
 
-  const data = Array.from({ length: 100 }).map((_, index) => ({
-    // use faker to generate fake data
-    userName: faker.internet.userName(),
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
-    phone: faker.phone.number(),
-    email: faker.internet.email(),
-    department: faker.commerce.department(),
-    status: faker.helpers.arrayElement(["active", "inactive"]),
-  }));
+  const onSearch = async (formValue: any) => {
+    const queryString = `paging?first=0&rows=10&page=0&userName=${formValue.userName}&name=${formValue.name}&email=${formValue.email}&phoneNumber=${formValue.phoneNumber}`;
 
-  const onSearch = (formValue: any) => {
-    console.log(formValue);
+    const resp = await api.user_search({
+      params: queryString,
+    });
+
+    tableRef.current?.setData(resp.data);
   };
 
   const handleAdd = () => {
@@ -197,7 +167,6 @@ const UserPage = () => {
         <TableRender
           ref={tableRef}
           columns={columns}
-          data={data}
           primaryKey={"userName"}
           handleEdit={handleEdit}
           handleDelete={handleDelete}
